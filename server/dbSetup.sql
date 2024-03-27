@@ -14,8 +14,10 @@ CREATE TABLE recipes(
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   title VARCHAR(100) NOT NULL,
   instructions VARCHAR(2000) NOT NULL,
-  category ENUM("Soup", "Pasta", "Fish", "Salad", "Beef", "Burgers", "Specialty Coffee", "Italian", "Cheese", "Mexican", "Other") DEFAULT "Other",
+  category ENUM("soup", "pasta", "fish", "salad", "beef", "burgers", "specialty coffee", "italian", "cheese", "mexican", "other") DEFAULT "other",
   img VARCHAR(1000) NOT NULL,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )
+
+-- DROP TABLE recipes;
