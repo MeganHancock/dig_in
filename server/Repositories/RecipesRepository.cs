@@ -2,6 +2,7 @@
 
 
 
+
 namespace dig_in.Repositories;
 
 public class RecipesRepository
@@ -80,5 +81,33 @@ public class RecipesRepository
         string sql = "DELETE FROM recipes WHERE id = @recipeId LIMIT 1";
 
         _db.Execute(sql, new { recipeId });
+    }
+
+    internal Recipe UpdateRecipe(Recipe updatedRecipe)
+    {
+        string sql = @"
+        UPDATE recipes 
+        SET
+        title = @Title,
+        category = @Category,
+        img = @Img,
+        instructions = @Instructions
+        WHERE id = @Id
+        LIMIT 1;
+
+        SELECT 
+        recipe.*,
+        account.*
+        FROM recipes recipe 
+        JOIN accounts account ON recipe.creatorId = account.id
+        WHERE recipe.id = @Id;";
+
+        Recipe recipe = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
+        {
+            recipe.Creator = account;
+            return recipe;
+        }, updatedRecipe).FirstOrDefault();
+
+        return recipe;
     }
 }

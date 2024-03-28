@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace dig_in.Services;
@@ -45,5 +46,23 @@ public class RecipesService
     }
 
 
+    internal Recipe UpdateRecipe(int recipeId, string userId, Recipe recipeData)
+    {
+        Recipe recipeToUpdate = GetRecipeById(recipeId);
+
+        if (recipeToUpdate.CreatorId != userId)
+        {
+            throw new Exception("Not Your Recipe");
+        }
+
+        recipeToUpdate.Title = recipeData.Title ?? recipeToUpdate.Title;
+        recipeToUpdate.Category = recipeData.Category ?? recipeToUpdate.Category;
+        recipeToUpdate.Img = recipeData.Img ?? recipeToUpdate.Img;
+        recipeToUpdate.Instructions = recipeData.Instructions ?? recipeToUpdate.Instructions;
+
+        Recipe recipe = _repository.UpdateRecipe(recipeToUpdate);
+
+        return recipe;
+    }
 
 }
