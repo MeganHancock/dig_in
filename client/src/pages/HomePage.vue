@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <section v-if="recipes" class="row m-auto">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-md-4 d-flex justify-content-center mb-5">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-md-4 d-flex justify-content-center mb-2">
         <RecipeCard :recipe="recipe" />
       </div>
     </section>
