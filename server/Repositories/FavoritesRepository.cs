@@ -1,4 +1,5 @@
 
+
 namespace dig_in.Repositories;
 
 public class FavoritesRepository
@@ -26,4 +27,12 @@ public class FavoritesRepository
         Favorite favorite = _db.Query<Favorite>(sql, favoriteData).FirstOrDefault();
         return favorite;
     }
+
+    // internal List<Recipe> GetUsersFavoriteRecipes(string userId)
+    // {
+    //     string sql = @"
+    //     SELECT
+    //     favorite.*
+    //     ;";
+    // }
 }
