@@ -1,6 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
-using Microsoft.AspNetCore.Http.HttpResults;
-
 namespace dig_in.Services;
 
 public class RecipesService
@@ -44,8 +41,6 @@ public class RecipesService
 
         return $"{recipeToDestroy.Title} has been removed.";
     }
-
-
     internal Recipe UpdateRecipe(int recipeId, string userId, Recipe recipeData)
     {
         Recipe recipeToUpdate = GetRecipeById(recipeId);
