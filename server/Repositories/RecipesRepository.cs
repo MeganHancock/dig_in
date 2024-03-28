@@ -3,6 +3,7 @@
 
 
 
+
 namespace dig_in.Repositories;
 
 public class RecipesRepository
@@ -111,3 +112,19 @@ public class RecipesRepository
         return recipe;
     }
 }
+
+//NOTE ingredient requests
+
+//     internal List<Ingredient> GetIngredientsByRecipeId(Recipe requestedRecipe)
+//     {
+//         string sql = @"
+//         SELECT
+//         ingredient.*,
+//         recipe*
+//         FROM ingredients ingredient
+//         JOIN recipes recipe ON ingredient.recipeId = recipe.id
+//         WHERE recipe.id = @requestedRecipe.id
+
+//         ;";
+//     }
+// }

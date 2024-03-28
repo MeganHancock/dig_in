@@ -60,4 +60,13 @@ public class RecipesService
         return recipe;
     }
 
+    //NOTE ingredient http request
+
+    //    internal List<Ingredient> GetIngredientsByRecipeId(int recipeId)
+    //     {
+    //         Recipe requestedRecipe = GetRecipeById(recipeId);
+    //         List<Ingredient> ingredients = _repository.GetIngredientsByRecipeId(requestedRecipe);
+    //         return ingredients;
+    //     }
+
 }

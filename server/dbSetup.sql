@@ -14,13 +14,13 @@ CREATE TABLE recipes(
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   title VARCHAR(100) NOT NULL,
   instructions VARCHAR(2000) NOT NULL,
-  category ENUM("soup", "pasta", "fish", "salad", "beef", "burgers", "coffee", "italian", "cheese", "mexican", "other") DEFAULT "other",
+  category ENUM("coffee", "italian", "cheese", "mexican", "soup") DEFAULT "soup",
   img VARCHAR(1000) NOT NULL,
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )
 
--- DROP TABLE recipes;
+-- DROP TABLE ingredients;
 
 CREATE TABLE ingredients(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -31,3 +31,4 @@ CREATE TABLE ingredients(
   recipeId INT NOT NULL,
   FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
   )
+
