@@ -1,3 +1,4 @@
+
 namespace dig_in.Services;
 
 public class FavoritesService
@@ -8,4 +9,9 @@ public class FavoritesService
         _repository = repository;
     }
 
+    internal Favorite CreateFavorite(Favorite favoriteData)
+    {
+        Favorite favorite = _repository.CreateFavorite(favoriteData);
+        return favorite;
+    }
 }

@@ -40,3 +40,4 @@ CREATE TABLE favorites(
   accountId VARCHAR(255) NOT NULL,
   FOREIGN KEY(accountId) REFERENCES accounts(id) ON DELETE CASCADE
 )
+

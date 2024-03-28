@@ -27,4 +27,9 @@ public class AccountController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+
+  //NOTE favorites https request
+
+  [HttpGet("favorites")]
+
 }
