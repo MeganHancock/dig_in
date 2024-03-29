@@ -1,6 +1,3 @@
-
-
-
 namespace dig_in.Repositories;
 
 public class FavoritesRepository
@@ -34,7 +31,12 @@ public class FavoritesRepository
         favoriteData).FirstOrDefault();
         return favoriteAndRecipe;
     }
-
+    internal Favorite FindFavoriteById(int favoriteId)
+    {
+        string sql = "SELECT * FROM favorites WHERE id = @favoriteId;";
+        Favorite foundFavorite = _db.Query<Favorite>(sql, new { favoriteId }).FirstOrDefault();
+        return foundFavorite;
+    }
     internal List<FavoriteAndRecipe> GetUsersFavoriteRecipes(string userId)
     {
         string sql = @"
@@ -56,11 +58,9 @@ public class FavoritesRepository
         }, new { userId }).ToList();
         return usersFavoriteRecipes;
     }
+    internal void DestroyFavorite(int favoriteId)
+    {
+        string sql = "DELETE FROM favorites WHERE id = @favoriteId;";
+        _db.Execute(sql, new { favoriteId });
+    }
 }
-// internal List<Recipe> GetUsersFavoriteRecipes(string userId)
-// {
-//     string sql = @"
-//     SELECT
-//     favorite.*
-//     ;";
-// }

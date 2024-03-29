@@ -41,3 +41,5 @@ CREATE TABLE favorites(
   FOREIGN KEY(accountId) REFERENCES accounts(id) ON DELETE CASCADE
 )
 
+DELETE FROM favorites WHERE id = 3;
+SELECT FROM favorites WHERE id = 5 LIMIT 1;
