@@ -10,10 +10,10 @@ public class FavoritesService
         _repository = repository;
     }
 
-    internal Favorite CreateFavorite(Favorite favoriteData)
+    internal FavoriteProfile CreateFavorite(Favorite favoriteData)
     {
-        Favorite favorite = _repository.CreateFavorite(favoriteData);
-        return favorite;
+        FavoriteProfile favoriteProfile = _repository.CreateFavorite(favoriteData);
+        return favoriteProfile;
     }
 
     // internal List<Recipe> GetUsersFavoriteRecipes(string userId)

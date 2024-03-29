@@ -10,7 +10,7 @@ public class FavoritesRepository
         _db = db;
     }
 
-    internal Favorite CreateFavorite(Favorite favoriteData)
+    internal FavoriteProfile CreateFavorite(Favorite favoriteData)
     {
         string sql = @"
         INSERT INTO
@@ -21,11 +21,17 @@ public class FavoritesRepository
         favorite.*,
         recipe.*
         FROM favorites favorite
-        JOIN recipes recipe ON favorite.recipeId = recipe.id
+        JOIN recipes recipe ON recipe.id = favorite.recipeId
         WHERE favorite.id = LAST_INSERT_ID();";
 
-        Favorite favorite = _db.Query<Favorite>(sql, favoriteData).FirstOrDefault();
-        return favorite;
+        FavoriteProfile favoriteProfile = _db.Query<Favorite, FavoriteProfile, FavoriteProfile>(sql, (favorite, recipe) =>
+        {
+            recipe.FavoriteId = favorite.Id;
+            recipe.RecipeId = favorite.RecipeId;
+            return recipe;
+        },
+        favoriteData).FirstOrDefault();
+        return favoriteProfile;
     }
 
     // internal List<Recipe> GetUsersFavoriteRecipes(string userId)
