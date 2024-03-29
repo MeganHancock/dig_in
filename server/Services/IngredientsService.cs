@@ -21,8 +21,22 @@ public class IngredientsService
         return ingredients;
     }
 
+    internal Ingredient GetIngredientById(int ingredientId)
+    {
+        Ingredient foundIngredient = _repository.GetIngredientId(ingredientId);
+
+        if (foundIngredient == null)
+        {
+            throw new Exception($"Invalid ID: {ingredientId}");
+        }
+        return foundIngredient;
+    }
+
     internal string DestroyIngredient(int ingredientId)
     {
+        Ingredient foundIngredient = GetIngredientById(ingredientId);
+
+
         _repository.DestroyIngredient(ingredientId);
         return "Ingredient has been removed.";
     }

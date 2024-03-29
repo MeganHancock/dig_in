@@ -1,21 +1,31 @@
 <template>
-    <div class="position-relative">
-        <p class="label-decoration fw-bold rounded-3 position-absolute mt-2 ms-2 p-1">{{ recipe.category }}</p>
-        <img :src="recipe.imgUrl" :alt="recipe.title">
-        <p class=" title-label label-decoration rounded-3"><b>{{ recipe.title
-                }}</b><br>
-            <span class="d-none d-md-block">
-                {{ recipe.subtitle }}
-            </span>
-        </p>
-    </div>
+
+    <a @click="setActiveRecipe(recipe.id)" type="button" class="" data-bs-toggle="modal" data-bs-target="#recipeModal">
+
+        <div class="position-relative">
+            <p class="label-decoration fw-bold rounded-3 position-absolute mt-2 ms-2 p-1">{{ recipe.category }}</p>
+            <img :src="recipe.imgUrl" :alt="recipe.title">
+            <p class=" title-label label-decoration rounded-3"><b>{{ recipe.title
+                    }}</b><br>
+                <span class="d-none d-md-block">
+                    {{ recipe.subtitle }}
+                </span>
+            </p>
+        </div>
+
+    </a>
+
+    <ModalComponent />
 </template>
 
 
 <script>
+import ModalComponent from '../components/ModalComponent.vue';
 import { computed } from 'vue';
 import { Recipe } from '../models/Recipe.js';
 import { AppState } from '../AppState.js';
+import { logger } from '../utils/Logger.js';
+import { recipesService } from '../services/RecipesService.js';
 
 
 export default {
@@ -24,6 +34,12 @@ export default {
     setup() {
         return {
 
+            async setActiveRecipe(recipeId) {
+                logger.log('active recipe id', recipeId)
+                await recipesService.setActiveRecipe(recipeId)
+            },
+
+            components: { ModalComponent }
         }
     }
 }
@@ -44,11 +60,8 @@ img {
     max-width: auto;
 }
 
-// .title-label {
-//     position: absolute;
-//     top: -110px;
-//     // right: 2;
-//     width: 100%;
-//     margin: 10;
-//     // height: 100px;
-// }</style>
+a {
+    border: none;
+    color: transparent;
+}
+</style>

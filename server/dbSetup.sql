@@ -43,3 +43,5 @@ CREATE TABLE favorites(
 
 DELETE FROM favorites WHERE id = 3;
 SELECT FROM favorites WHERE id = 5 LIMIT 1;
+
+DELETE FROM ingredients WHERE id = 2 LIMIT 1;

@@ -29,6 +29,13 @@ public class IngredientsRepository
         return ingredient;
     }
 
+    internal Ingredient GetIngredientId(int ingredientId)
+    {
+        string sql = "SELECT * FROM ingredients WHERE id = @ingredientId;";
+        Ingredient foundIngredient = _db.Query<Ingredient>(sql, new { ingredientId }).FirstOrDefault();
+        return foundIngredient;
+    }
+
     internal List<Ingredient> GetIngredientsByRecipeId(int recipeId)
     {
         string sql = @"
