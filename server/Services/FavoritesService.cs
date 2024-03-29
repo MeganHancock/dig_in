@@ -1,5 +1,6 @@
 
 
+
 namespace dig_in.Services;
 
 public class FavoritesService
@@ -14,6 +15,12 @@ public class FavoritesService
     {
         FavoriteAndRecipe favoriteAndRecipe = _repository.CreateFavorite(favoriteData);
         return favoriteAndRecipe;
+    }
+
+    internal List<FavoriteAndRecipe> GetUsersFavoriteRecipes(string userId)
+    {
+        List<FavoriteAndRecipe> usersFavoriteRecipes = _repository.GetUsersFavoriteRecipes(userId);
+        return usersFavoriteRecipes;
     }
 
     // internal List<Recipe> GetUsersFavoriteRecipes(string userId)

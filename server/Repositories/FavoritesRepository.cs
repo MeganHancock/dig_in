@@ -1,5 +1,6 @@
 
 
+
 namespace dig_in.Repositories;
 
 public class FavoritesRepository
@@ -34,11 +35,32 @@ public class FavoritesRepository
         return favoriteAndRecipe;
     }
 
-    // internal List<Recipe> GetUsersFavoriteRecipes(string userId)
-    // {
-    //     string sql = @"
-    //     SELECT
-    //     favorite.*
-    //     ;";
-    // }
+    internal List<FavoriteAndRecipe> GetUsersFavoriteRecipes(string userId)
+    {
+        string sql = @"
+        SELECT 
+        favorite.*,
+        recipe.*,
+        account.*
+        FROM favorites favorite
+        JOIN recipes recipe ON recipe.id = favorite.recipeId
+        JOIN accounts account ON account.id = recipe.creatorId
+        WHERE favorite.accountId = @userId;";
+
+        List<FavoriteAndRecipe> usersFavoriteRecipes = _db.Query<Favorite, FavoriteAndRecipe, Account, FavoriteAndRecipe>(sql, (favorite, recipe, account) =>
+        {
+            recipe.FavoriteId = favorite.Id;
+            recipe.CreatorId = favorite.AccountId;
+            recipe.Creator = account;
+            return recipe;
+        }, new { userId }).ToList();
+        return usersFavoriteRecipes;
+    }
 }
+// internal List<Recipe> GetUsersFavoriteRecipes(string userId)
+// {
+//     string sql = @"
+//     SELECT
+//     favorite.*
+//     ;";
+// }

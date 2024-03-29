@@ -34,21 +34,21 @@ public class AccountController : ControllerBase
 
   //NOTE favorites https request
 
-  // [HttpGet("favorites")]
-  // [Authorize]
-  // public async Task<ActionResult<Recipe>> GetUsersFavoriteRecipes()
-  // {
-  //   try
-  //   {
-  //     Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-  //     List<Recipe> usersRecipes = _favoritesService.GetUsersFavoriteRecipes(userInfo.Id);
-  //     return Ok(usersRecipes);
-  //   }
-  //   catch (Exception exception)
-  //   {
-  //     return BadRequest(exception.Message);
-  //   }
-  // }
+  [HttpGet("favorites")]
+  [Authorize]
+  public async Task<ActionResult<List<FavoriteAndRecipe>>> GetUsersFavoriteRecipes()
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      List<FavoriteAndRecipe> favoritesRecipes = _favoritesService.GetUsersFavoriteRecipes(userInfo.Id);
+      return Ok(favoritesRecipes);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 
 
 }
