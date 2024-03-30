@@ -23,7 +23,7 @@ public class IngredientsService
 
     internal Ingredient GetIngredientById(int ingredientId)
     {
-        Ingredient foundIngredient = _repository.GetIngredientId(ingredientId);
+        Ingredient foundIngredient = _repository.GetIngredientById(ingredientId);
 
         if (foundIngredient == null)
         {
@@ -34,7 +34,10 @@ public class IngredientsService
 
     internal string DestroyIngredient(int ingredientId)
     {
-        Ingredient foundIngredient = GetIngredientById(ingredientId);
+
+        // Ingredient foundIngredient = GetIngredientById(ingredientId);
+
+        // if(foundIngredient.)
 
 
         _repository.DestroyIngredient(ingredientId);
