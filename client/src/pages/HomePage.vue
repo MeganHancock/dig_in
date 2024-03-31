@@ -34,6 +34,7 @@ import { computed, onMounted } from 'vue';
 import Pop from '../utils/Pop.js';
 import { recipesService } from "../services/RecipesService.js"
 import { AppState } from '../AppState.js';
+import { logger } from '../utils/Logger.js';
 
 
 export default {
@@ -45,6 +46,7 @@ export default {
 
     async function getRecipes() {
       try {
+        // logger.log('on mounted')
         await recipesService.getRecipes()
       }
       catch (error) {

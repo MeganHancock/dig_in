@@ -1,4 +1,3 @@
-import App from "../App.vue"
 import { AppState } from "../AppState.js"
 import { Recipe } from "../models/Recipe.js"
 import { logger } from "../utils/Logger.js"
