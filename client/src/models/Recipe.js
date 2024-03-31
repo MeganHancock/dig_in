@@ -11,9 +11,10 @@ export class Recipe{
         this.category = data.category
         this.creatorId = data.creatorId
         this.creator = data.creator
+        this.subtitle = data.subtitle || this.subtitleIntro
     }
 
-    get subtitle(){
+    get subtitleIntro(){
         let subtitle = this.instructions.substring(0, 20)
         return subtitle + ' ...'
     }

@@ -16,11 +16,12 @@ CREATE TABLE recipes(
   instructions VARCHAR(2000) NOT NULL,
   category ENUM("coffee", "italian", "cheese", "mexican", "soup") DEFAULT "soup",
   img VARCHAR(1000) NOT NULL,
+  subtitle VARCHAR(200),
   creatorId VARCHAR(255) NOT NULL,
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
   )
 
--- DROP TABLE ingredients;
+DROP TABLE recipes;
 
 CREATE TABLE ingredients(
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -29,6 +30,7 @@ CREATE TABLE ingredients(
   name VARCHAR(255) NOT NULL,
   quantity VARCHAR(50) NOT NULL,
   recipeId INT NOT NULL,
+  FOREIGN KEY(recipeId) REFERENCES recipes(id) ON DELETE CASCADE
   )
 
 CREATE TABLE favorites(
@@ -40,6 +42,8 @@ CREATE TABLE favorites(
   accountId VARCHAR(255) NOT NULL,
   FOREIGN KEY(accountId) REFERENCES accounts(id) ON DELETE CASCADE
 )
+
+DROP TABLE favorites;
 
 DELETE FROM favorites WHERE id = 3;
 SELECT FROM favorites WHERE id = 5 LIMIT 1;

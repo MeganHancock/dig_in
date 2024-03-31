@@ -15,17 +15,18 @@
 
     </a>
 
-    <ModalComponent />
+    <RecipeModalComponent />
 </template>
 
 
 <script>
-import ModalComponent from '../components/ModalComponent.vue';
+import RecipeModalComponent from '../components/RecipeModalComponent.vue';
 import { computed } from 'vue';
 import { Recipe } from '../models/Recipe.js';
 import { AppState } from '../AppState.js';
 import { logger } from '../utils/Logger.js';
 import { recipesService } from '../services/RecipesService.js';
+import { ingredientsService } from '../services/IngredientsService.js';
 
 
 export default {
@@ -37,9 +38,10 @@ export default {
             async setActiveRecipe(recipeId) {
                 logger.log('active recipe id', recipeId)
                 await recipesService.setActiveRecipe(recipeId)
+                await ingredientsService.setRecipeIngredientsByRecipeId(recipeId)
             },
 
-            components: { ModalComponent }
+            components: { RecipeModalComponent }
         }
     }
 }
