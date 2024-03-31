@@ -1,6 +1,6 @@
 <template>
 
-    <a @click="setActiveRecipe(recipe.id)" type="button" class="" data-bs-toggle="modal" data-bs-target="#recipeModal">
+    <a @click="setActiveRecipe()" type="button" class="" data-bs-toggle="modal" data-bs-target="#recipeModal">
 
         <div class="position-relative">
             <p class="label-decoration fw-bold rounded-3 position-absolute mt-2 ms-2 p-1">{{ recipe.category }}</p>
@@ -15,33 +15,36 @@
 
     </a>
 
-    <RecipeModalComponent />
 </template>
 
 
 <script>
-import RecipeModalComponent from '../components/RecipeModalComponent.vue';
 import { computed } from 'vue';
 import { Recipe } from '../models/Recipe.js';
 import { AppState } from '../AppState.js';
 import { logger } from '../utils/Logger.js';
 import { recipesService } from '../services/RecipesService.js';
+import Pop from '../utils/Pop.js';
 import { ingredientsService } from '../services/IngredientsService.js';
+import { Ingredient } from '../models/Ingredient.js';
 
 
 export default {
-    props: { recipe: { type: Recipe } },
+    props: {
+        recipe: { type: Recipe, required: true },
+    },
 
-    setup() {
+    setup(props) {
         return {
 
-            async setActiveRecipe(recipeId) {
-                logger.log('active recipe id', recipeId)
-                await recipesService.setActiveRecipe(recipeId)
-                await ingredientsService.setRecipeIngredientsByRecipeId(recipeId)
+            setActiveRecipe() {
+                try {
+                    recipesService.setActiveRecipe(props.recipe)
+                    ingredientsService.setRecipeIngredientsByRecipeId(props.recipe.id)
+                } catch (error) {
+                    Pop.error(error)
+                }
             },
-
-            components: { RecipeModalComponent }
         }
     }
 }

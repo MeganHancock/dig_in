@@ -8,12 +8,15 @@
   <footer class="bg-dark text-light">
     Made with 💖 by CodeWorks
   </footer>
+  <RecipeModalComponent />
 </template>
 
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import RecipeModalComponent from './components/RecipeModalComponent.vue';
+
 
 export default {
   setup() {
@@ -21,11 +24,12 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, RecipeModalComponent }
 }
 </script>
 <style lang="scss">
 @import "./assets/scss/main.scss";
+
 
 :root {
   --main-height: calc(100vh - 32px - 64px);

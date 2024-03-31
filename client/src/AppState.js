@@ -13,6 +13,6 @@ export const AppState = reactive({
   /** @type {import('./models/Recipe.js').Recipe} */
   activeRecipe: null,
   
-  /** @type {import('./models/Ingredient.js').Ingredient} */
-  activeRecipeIngredients: null
+  /** @type {import('./models/Ingredient.js').Ingredient[]} */
+  activeRecipeIngredients: []
 })

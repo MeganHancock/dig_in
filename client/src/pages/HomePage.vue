@@ -27,6 +27,16 @@
       </div>
     </section>
   </div>
+
+  <div class="create-button-position m-5">
+    <button class="create-button-style d-flex justify-content-center align-items-center" data-bs-toggle="modal"
+      data-bs-target="#exampleModal">
+      <p class="p-0 mb-2">+</p>
+    </button>
+  </div>
+
+
+  <CreateRecipeModal />
 </template>
 
 <script>
@@ -35,6 +45,8 @@ import Pop from '../utils/Pop.js';
 import { recipesService } from "../services/RecipesService.js"
 import { AppState } from '../AppState.js';
 import { logger } from '../utils/Logger.js';
+import CreateRecipeModal from '../components/CreateRecipeModal.vue';
+
 
 
 export default {
@@ -58,7 +70,8 @@ export default {
       recipes: computed(() => AppState.recipes)
 
     }
-  }
+  },
+  components: { CreateRecipeModal }
 }
 </script>
 
@@ -79,5 +92,22 @@ export default {
 
 .hero-navigation {
   background-color: white;
+}
+
+.create-button-position {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+}
+
+.create-button-style {
+  background-color: rgb(95, 120, 58);
+  border-radius: 50%;
+  height: 8vh;
+  width: 8vh;
+  border-color: rgb(95, 120, 58);
+  color: white;
+  font-weight: bolder;
+  font-size: 50px;
 }
 </style>

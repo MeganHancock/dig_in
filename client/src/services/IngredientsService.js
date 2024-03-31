@@ -5,10 +5,11 @@ import { api } from "./AxiosService.js"
 
 class IngredientsService{
 async setRecipeIngredientsByRecipeId(recipeId) {
+    AppState.activeRecipeIngredients = null
 const response = await api.get(`api/recipes/${recipeId}/ingredients`)
-logger.log('ingredient response data', response.data)
+// logger.log('ingredient response data', response.data)
 AppState.activeRecipeIngredients = response.data.map(ingredientPOJO => new Ingredient(ingredientPOJO))
-logger.log('mapped ingredients', AppState.activeRecipeIngredients)
+// logger.log('mapped ingredients', AppState.activeRecipeIngredients)
 }
 
 }

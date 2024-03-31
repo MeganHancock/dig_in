@@ -18,6 +18,9 @@
             <p>
               {{ activeRecipe.instructions }}
             </p>
+            <div v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
+              <p>{{ ingredient.name }} - {{ ingredient.quantity }}</p>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -33,13 +36,17 @@
 
 
 <script>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
+
 
 export default {
   setup() {
+
     return {
       activeRecipe: computed(() => AppState.activeRecipe),
+      activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
+
 
     }
   }
