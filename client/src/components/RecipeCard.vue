@@ -4,7 +4,7 @@
 
         <div class="position-relative">
             <p class="label-decoration fw-bold rounded-3 position-absolute mt-2 ms-2 p-1">{{ recipe.category }}</p>
-            <img :src="recipe.imgUrl" :alt="recipe.title">
+            <img :src="recipe.img" :alt="recipe.title">
             <p class=" title-label label-decoration rounded-3"><b>{{ recipe.title
                     }}</b><br>
                 <span class="d-none d-md-block">

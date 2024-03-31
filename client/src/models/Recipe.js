@@ -7,7 +7,7 @@ export class Recipe{
         this.dateUpdatedAt = new Date(data.updatedAt).toLocaleDateString
         this.title = data.title
         this.instructions = data.instructions
-        this.imgUrl = data.img
+        this.img = data.img
         this.category = data.category
         this.creatorId = data.creatorId
         this.creator = data.creator
@@ -16,6 +16,6 @@ export class Recipe{
 
     get subtitleIntro(){
         let subtitle = this.instructions.substring(0, 20)
-        return subtitle + ' ...'
+               return subtitle
     }
 }

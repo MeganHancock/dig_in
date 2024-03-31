@@ -16,7 +16,16 @@ class RecipesService{
         AppState.activeRecipe = recipe
         // logger.log('active recipe', AppState.activeRecipe)
     }
-
+    
+    async createRecipe(recipeData) {
+        recipeData.instructions = ''
+        const response = await api.post('api/recipes', recipeData)
+        logger.log(response.data)
+        const newRecipe = new Recipe(response.data)
+        AppState.recipes.push(newRecipe)
+        AppState.activeRecipe = newRecipe
+        return newRecipe
+    }
     
 }
 export const recipesService = new RecipesService()

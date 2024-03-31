@@ -30,7 +30,7 @@
 
   <div class="create-button-position m-5">
     <button class="create-button-style d-flex justify-content-center align-items-center" data-bs-toggle="modal"
-      data-bs-target="#exampleModal">
+      data-bs-target="#createRecipeFormModal">
       <p class="p-0 mb-2">+</p>
     </button>
   </div>

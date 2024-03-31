@@ -13,7 +13,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <img :src="activeRecipe.imgUrl" :alt="activeRecipe.title">
+          <img :src="activeRecipe.img" :alt="activeRecipe.title">
           <div>
             <p>
               {{ activeRecipe.instructions }}
@@ -38,6 +38,7 @@
 <script>
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState.js';
+import { ingredientsService } from '../services/IngredientsService.js';
 
 
 export default {
