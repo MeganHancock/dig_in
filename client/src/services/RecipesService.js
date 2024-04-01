@@ -27,5 +27,9 @@ class RecipesService{
         return newRecipe
     }
     
+    async removeRecipe(recipeId) {
+const response = await api.delete(`api/recipes/${recipeId}`)
+AppState.activeRecipe = null
+    }
 }
 export const recipesService = new RecipesService()
