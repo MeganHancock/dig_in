@@ -4,6 +4,7 @@ import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
 class RecipesService{
+
     async getRecipes() {
         // logger.log('recipes service')
         const response = await api.get('api/recipes')
@@ -32,6 +33,21 @@ class RecipesService{
 
     const response = await api.delete(`api/recipes/${recipeId}`)
     AppState.activeRecipe = null
+    }
+
+    async getRecipeById(recipeId){
+        const response = await api.get(`api/recipes/${recipeId}`)
+        logger.log('found recipe by id', response.data)
+    }
+    setActiveInstructionsEditing(activeRecipeId) {
+    AppState.activeRecipeEditing = true
+    }
+
+    async saveEditedInstructions(ingredientData, recipeId) {
+        const response = await api.put(`api/recipes/${recipeId}`, ingredientData)
+        logger.log('updated response', response.data)
+        AppState.activeRecipeEditing = false
+        AppState.activeRecipe = new Recipe(response.data)
     }
 }
 export const recipesService = new RecipesService()

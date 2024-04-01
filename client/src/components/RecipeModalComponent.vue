@@ -9,18 +9,26 @@
         <div class="modal-body p-0 d-flex ">
 
           <img :src="activeRecipe.img" :alt="activeRecipe.title" class="m-0 rounded-start w-50">
-          <div class="m-1">
+          <div class="m-1 d-flex-column pt-3 mx-auto">
 
             <h4 class="text-center">{{ activeRecipe.title }}</h4>
 
             <div class="card m-1 p-1">
               <h5>Instructions</h5>
 
-              <p>
+              <form @submit.prevent="saveEditedInstructions(activeRecipe.id)" v-if="activeRecipeEditing"
+                class="d-flex align-items-end">
+                <textarea v-model="editableInstructionData.instructions" name="instructions" id="editInstructions"
+                  cols="35" rows="3"></textarea>
+                <button type="submit" class="btn btn-success ms-3 mb-0">+</button>
+              </form>
+              <p v-else>
                 {{ activeRecipe.instructions }}
               </p>
               <div class="d-flex justify-content-end">
-                <button v-if="activeRecipe.creatorId = account.id">Edit</button>
+                <button @click="setActiveInstructionsEditing(activeRecipe.id)"
+                  v-if="activeRecipe.creatorId = account.id && !activeRecipeEditing"
+                  class="btn btn-success ms-3">Edit</button>
               </div>
 
             </div>
@@ -56,6 +64,7 @@
           </div>
         </div>
 
+        <!-- NOTE FOOTER BUTTONS -->
         <div class="modal-footer d-flex justify-content-between">
           <div v-if="activeRecipe.creatorId = account.id">
             <button @click="removeRecipe(activeRecipe.id)" class="btn btn-warning" type="button">Delete Recipe</button>
@@ -68,7 +77,6 @@
         </div>
       </div>
 
-      <!-- NOTE FOOTER BUTTONS -->
 
     </div>
   </div>
@@ -78,7 +86,7 @@
 
 
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { AppState } from '../AppState.js';
 import { ingredientsService } from '../services/IngredientsService.js';
 import Pop from '../utils/Pop.js';
@@ -88,12 +96,18 @@ import { Modal } from 'bootstrap';
 
 export default {
   setup() {
+    const editableInstructionData = ref({ instructions: '' })
     const editableIngredientData = ref({ name: '', quantity: '' })
+    const activeRecipe = computed(() => AppState.activeRecipe)
+    watch(activeRecipe, () => { editableInstructionData.value = { ...activeRecipe.value } }, { immediate: true })
+
     return {
-      activeRecipe: computed(() => AppState.activeRecipe),
+      activeRecipeEditing: computed(() => AppState.activeRecipeEditing),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
       account: computed(() => AppState.account),
       editableIngredientData,
+      editableInstructionData,
+      activeRecipe,
 
       async removeRecipe(recipeId) {
         try {
@@ -105,7 +119,6 @@ export default {
 
           await recipesService.removeRecipe(recipeId)
           Pop.success('Recipe has been removed.')
-          // Modal.getOrCreateInstance('#recipeModal').hide()
 
         }
         catch (error) {
@@ -121,6 +134,8 @@ export default {
           }
           await ingredientsService.removeIngredient(ingredientId)
           Pop.success('Ingredient has been removed')
+          Modal.getOrCreateInstance('#recipeModal').hide()
+
         }
         catch (error) {
           Pop.error(error);
@@ -135,6 +150,20 @@ export default {
         catch (error) {
           Pop.error(error);
         }
+      },
+
+      setActiveInstructionsEditing(activeRecipeId) {
+        recipesService.setActiveInstructionsEditing(activeRecipeId)
+      },
+
+      async saveEditedInstructions(recipeId) {
+        try {
+          await recipesService.saveEditedInstructions(editableInstructionData.value, recipeId)
+        }
+        catch (error) {
+          Pop.error(error);
+        }
+
       }
 
     }
@@ -148,5 +177,12 @@ img {
   // max-width: 100;
   aspect-ratio: 1/1.4;
   object-fit: cover;
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%
 }
 </style>
