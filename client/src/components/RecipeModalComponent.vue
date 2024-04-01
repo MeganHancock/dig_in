@@ -1,9 +1,5 @@
 <template>
 
-  <!-- Button trigger modal -->
-
-
-  <!-- Modal -->
   <div v-if="activeRecipe" class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModal"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">

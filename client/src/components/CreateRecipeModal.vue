@@ -26,11 +26,10 @@
                                     id="recipeSubtitle" aria-describedby="recipeSubtitle" minlength="3" maxLength="50"
                                     required>
                             </div>
-
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <label for="eventType" class="form-label">Recipe Category</label>
+                        <div class="mb-3">
+                            <label for="eventType" class="form-label">Recipe Category (select one)</label>
                             <select v-model="editableRecipeData.category" class="form-select" id="eventType"
                                 aria-label="Floating label select example" required>
                                 <option v-for="recipeCategory in recipeCategories" :key="recipeCategory"
@@ -39,9 +38,16 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="eventEventImage" class="form-label">Recipe Image URL</label>
+                            <label for="recipeInstructions" class="form-label">Recipe Instructions</label>
+                            <textarea v-model="editableRecipeData.instructions" type="string" class="form-control"
+                                id="recipeInstructions" aria-describedby="recipeInstructions" minlength="1"
+                                maxLength="1000" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="recipeImageUrl" class="form-label">Recipe Image URL</label>
                             <input v-model="editableRecipeData.img" type="string" class="form-control"
-                                id="eventLocation" aria-describedby="eventLocation" minlength="1" maxLength="1000"
+                                id="recipeImageUrl" aria-describedby="recipeImageUrl" minlength="1" maxLength="1000"
                                 required>
                         </div>
                         <div class="text-end">
@@ -64,7 +70,7 @@
 
 <script>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import Pop from '../utils/Pop.js'
 import { recipesService } from '../services/RecipesService.js'
 import { Modal } from 'bootstrap'
@@ -72,8 +78,8 @@ import { Modal } from 'bootstrap'
 
 export default {
     setup() {
-        const router = useRouter()
-        const editableRecipeData = ref({ title: '', category: '', subtitle: '', img: '' })
+        // const router = useRouter()
+        const editableRecipeData = ref({ title: '', category: '', subtitle: '', instructions: '', img: '' })
         return {
             editableRecipeData,
             recipeCategories: ['cheese', 'italian', 'soup', 'mexican', 'coffee'],
@@ -81,7 +87,7 @@ export default {
             async createRecipe() {
                 try {
                     const newRecipe = await recipesService.createRecipe(editableRecipeData.value)
-                    editableRecipeData.value = { title: '', category: '', subtitle: '', img: '' }
+                    editableRecipeData.value = { title: '', category: '', subtitle: '', instructions: '', img: '' }
                     Modal.getOrCreateInstance('#createRecipeFormModal').hide()
                     Modal.getOrCreateInstance('#recipeModal').show()
                 }

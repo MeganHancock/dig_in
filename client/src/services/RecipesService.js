@@ -18,7 +18,6 @@ class RecipesService{
     }
     
     async createRecipe(recipeData) {
-        recipeData.instructions = ''
         const response = await api.post('api/recipes', recipeData)
         logger.log(response.data)
         const newRecipe = new Recipe(response.data)
