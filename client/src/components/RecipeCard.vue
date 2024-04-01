@@ -40,7 +40,7 @@ export default {
             setActiveRecipe() {
                 try {
                     recipesService.setActiveRecipe(props.recipe)
-                    ingredientsService.setRecipeIngredientsByRecipeId(props.recipe.id)
+                    ingredientsService.getRecipeIngredientsByRecipeId(props.recipe.id)
                 } catch (error) {
                     Pop.error(error)
                 }
