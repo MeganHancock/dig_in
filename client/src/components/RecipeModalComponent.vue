@@ -1,9 +1,8 @@
 <template>
 
-  <div v-if="activeRecipe" class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModal"
-    aria-hidden="true">
+  <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModal" aria-hidden="true">
     <div class="modal-dialog modal-xl w-100">
-      <div class="modal-content">
+      <div v-if="activeRecipe" class="modal-content">
         <!-- <div class="modal-header">
           <h1 class="modal-title fs-5" id="recipeModalLabel">{{ activeRecipe.title }}</h1>
         </div> -->
@@ -11,47 +10,54 @@
 
           <img :src="activeRecipe.img" :alt="activeRecipe.title" class="m-0 rounded-start w-50">
           <div class="m-1">
-            <div>
-              <h4 class="text-center">{{ activeRecipe.title }}</h4>
 
-              <div class="card m-1 p-1">
-                <h5>Instructions</h5>
-                <p>
-                  {{ activeRecipe.instructions }}
-                </p>
+            <h4 class="text-center">{{ activeRecipe.title }}</h4>
+
+            <div class="card m-1 p-1">
+              <h5>Instructions</h5>
+
+              <p>
+                {{ activeRecipe.instructions }}
+              </p>
+              <div class="d-flex justify-content-end">
+                <button v-if="activeRecipe.creatorId = account.id">Edit</button>
               </div>
 
-              <!-- NOTE INGREDIENTS CARD AND FORM -->
-              <div class="card m-1 p-1">
-                <h5>Ingredients</h5>
-                <ul v-for="ingredient in activeRecipeIngredients" :key="ingredient.id">
-                  <li>
-                    {{ ingredient.name }} - {{ ingredient.quantity }}
-                  </li>
-                </ul>
-                <div v-if="activeRecipe.creatorId = account.id">
-                  <form @submit="createIngredient(activeRecipe.id)" class="d-flex">
-                    <div class="input-group m-1">
-                      <input v-model="editableIngredientData.name" type="text" class="form-control w-"
-                        placeholder="Name" aria-label="addIngredient" aria-describedby="button-addon2" required>
-                    </div>
-                    <div class="input-group m-1">
-                      <input v-model="editableIngredientData.quantity" type="text" class="form-control"
-                        placeholder="Quantity" aria-label="Recipient's username" aria-describedby="button-addon2">
-                      <button class="btn btn-outline-secondary" type="submit" id="button-addon2" required>+</button>
-                    </div>
-                  </form>
-                </div>
-
-              </div>
             </div>
-          </div>
 
+
+            <!-- NOTE INGREDIENTS CARD AND FORM -->
+            <div class="card m-1 p-1">
+              <h5>Ingredients</h5>
+              <ul v-for="ingredient in activeRecipeIngredients" :key="ingredient.id"
+                class="d-flex justify-content-between">
+                <li>
+                  {{ ingredient.name }} - {{ ingredient.quantity }}
+                </li>
+                <button @click="removeIngredient(ingredient.id)" type="button" class="border-0 text-danger bg-white"
+                  title="remove ingredient from list">X</button>
+              </ul>
+              <div v-if="activeRecipe.creatorId = account.id">
+                <form @submit="createIngredient(activeRecipe.id)" class="d-flex">
+                  <div class="input-group m-1">
+                    <input v-model="editableIngredientData.name" type="text" class="form-control w-" placeholder="Name"
+                      aria-label="addIngredient" aria-describedby="button-addon2" required>
+                  </div>
+                  <div class="input-group m-1">
+                    <input v-model="editableIngredientData.quantity" type="text" class="form-control"
+                      placeholder="Quantity" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2" required>+</button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+          </div>
         </div>
 
-        <!-- NOTE FOOTER BUTTONS -->
         <div class="modal-footer d-flex justify-content-between">
-          <div v-if="account.id = activeRecipe.creatorId">
+          <div v-if="activeRecipe.creatorId = account.id">
             <button @click="removeRecipe(activeRecipe.id)" class="btn btn-warning" type="button">Delete Recipe</button>
           </div>
           <div class="d-flex">
@@ -61,8 +67,12 @@
           </div>
         </div>
       </div>
+
+      <!-- NOTE FOOTER BUTTONS -->
+
     </div>
   </div>
+
 
 </template>
 
@@ -97,6 +107,20 @@ export default {
           Pop.success('Recipe has been removed.')
           // Modal.getOrCreateInstance('#recipeModal').hide()
 
+        }
+        catch (error) {
+          Pop.error(error);
+        }
+      },
+
+      async removeIngredient(ingredientId) {
+        try {
+          const wantsToRemove = await Pop.confirm('Are you sure you would like to remove this ingredient?')
+          if (!wantsToRemove) {
+            return
+          }
+          await ingredientsService.removeIngredient(ingredientId)
+          Pop.success('Ingredient has been removed')
         }
         catch (error) {
           Pop.error(error);

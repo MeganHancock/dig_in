@@ -19,10 +19,8 @@ public class IngredientsRepository
         VALUES(@Name, @Quantity, @RecipeId);
 
         SELECT
-        ingredient.*,
-        recipe.* 
+        ingredient.*
         FROM ingredients ingredient
-        JOIN recipes recipe ON ingredient.recipeId = recipe.id
         WHERE ingredient.id = LAST_INSERT_ID();";
 
         Ingredient ingredient = _db.Query<Ingredient>(sql, ingredientData).FirstOrDefault();
@@ -40,8 +38,8 @@ public class IngredientsRepository
     {
         string sql = @"
         SELECT
-        ingredient.*,
-        recipe.*
+        recipe.*,
+        ingredient.*
         FROM ingredients ingredient
         JOIN recipes recipe ON ingredient.recipeId = recipe.id 
         WHERE recipe.id = @recipeId

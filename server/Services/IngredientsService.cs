@@ -35,9 +35,6 @@ public class IngredientsService
     internal string DestroyIngredient(int ingredientId)
     {
 
-        // Ingredient foundIngredient = GetIngredientById(ingredientId);
-
-        // if(foundIngredient.)
 
 
         _repository.DestroyIngredient(ingredientId);
