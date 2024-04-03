@@ -65,13 +65,13 @@
         </div>
 
         <!-- NOTE FOOTER BUTTONS -->
-        <div class="modal-footer d-flex justify-content-between">
+        <div v-if="account.id" class="modal-footer d-flex justify-content-between">
           <div v-if="activeRecipe.creatorId == account.id">
             <button @click="removeRecipe(activeRecipe.id)" class="btn btn-warning" type="button">Delete Recipe</button>
           </div>
 
           <div class="d-flex">
-            <button v-if="!isFavorited" @click="createFavorite(activeRecipe.id)" type="button"
+            <button v-if="!isFavorited && account.id" @click="createFavorite(activeRecipe.id)" type="button"
               class="btn btn-success p-1" title="Favorite this recipe"><i
                 class="mdi mdi-heart-outline fs-1 text-light"></i></button>
 

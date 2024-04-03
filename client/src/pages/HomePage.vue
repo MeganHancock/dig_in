@@ -7,9 +7,9 @@
     </section>
   </div>
 
-  <div class="container my-5">
+  <div v-if="account.id" class="container mt-5 position-relative">
     <section class="row justify-content-center">
-      <div class="col-6 d-flex justify-content-between">
+      <div class="col-6 d-flex justify-content-between nav-banner shadow rounded-3 p-4">
         <h3 role="button" @click="drawAllRecipes()">Home</h3>
         <h3 role="button" @click="drawFavoriteRecipes()">Favorites</h3>
         <h3 role="button" @click="drawUsersRecipes()">My Recipes</h3>
@@ -18,7 +18,7 @@
   </div>
 
 
-  <div class="container">
+  <div class="container mt-5">
     <section v-if="recipes" class="row m-auto">
       <div v-for="recipe in recipes" :key="recipe.id" class="col-md-4 d-flex justify-content-center mb-2">
         <RecipeCard :recipe="recipe" />
@@ -27,10 +27,10 @@
   </div>
 
   <div class="create-button-position m-5">
-    <button class="create-button-style d-flex justify-content-center align-items-center" data-bs-toggle="modal"
-      data-bs-target="#createRecipeFormModal">
-      <p class="p-0 mb-2">+</p>
-    </button>
+    <div role="button" class="create-button-style d-flex justify-content-center align-items-center"
+      data-bs-toggle="modal" data-bs-target="#createRecipeFormModal">
+      <p class="pb-2 text-center mb-2">+</p>
+    </div>
   </div>
 
 
@@ -66,6 +66,7 @@ export default {
     }
 
     return {
+      account: computed(() => AppState.account),
       recipes: computed(() => AppState.recipes),
       accountFavorites: computed(() => AppState.allAccountFavorites),
 
@@ -101,8 +102,12 @@ export default {
   height: 43vh;
 }
 
-.hero-navigation {
+.nav-banner {
   background-color: white;
+  font-family: "Playfair Display", serif;
+  font-size: 70px;
+  position: absolute;
+  bottom: 5px;
 }
 
 .create-button-position {
@@ -112,13 +117,12 @@ export default {
 }
 
 .create-button-style {
-  background-color: rgb(95, 120, 58);
+  background-color: #0cbc87;
   border-radius: 50%;
+  aspect-ratio: 1/1;
   height: 8vh;
-  width: 8vh;
-  border-color: rgb(95, 120, 58);
   color: white;
   font-weight: bolder;
-  font-size: 50px;
+  font-size: 10vh;
 }
 </style>

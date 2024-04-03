@@ -10,14 +10,19 @@
             <i class="mdi mdi-heart-outline position-absolute mt-2 ms-2 p-1 right-0 fs-1"></i>
 
         </div> -->
+        <div class="mb-5 shadow">
+            <img :src="recipe.img" :alt="recipe.title" class="rounded-3">
+            <div class="position-relative">
+                <p class="subtitle title-label label-decoration rounded-3"><b>{{ recipe.title
+                        }}</b><br>
+                    <span class="d-none d-md-block">
+                        {{ recipe.subtitle }}
+                    </span>
+                </p>
 
-        <img :src="recipe.img" :alt="recipe.title">
-        <p class=" title-label label-decoration rounded-3"><b>{{ recipe.title
-                }}</b><br>
-            <span class="d-none d-md-block">
-                {{ recipe.subtitle }}
-            </span>
-        </p>
+            </div>
+
+        </div>
 
 
     </div>
@@ -67,9 +72,18 @@ img {
 }
 
 .label-decoration {
-    background-color: gray;
-    color: white;
+    background-color: rgba(128, 128, 128, 0.781);
     max-width: auto;
+    color: white;
+    padding: 2px;
+    margin-left: 5px;
+    text-shadow: 1px 1px black;
+    font-size: 1.8vh;
+}
+
+.subtitle {
+    position: absolute;
+    bottom: 5px;
 }
 
 a {
