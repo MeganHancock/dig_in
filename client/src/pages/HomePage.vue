@@ -93,8 +93,10 @@ export default {
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
-  font-size: 100px;
+  font-size: 170px;
   color: white;
+  text-shadow: 1px 1px black;
+
 }
 
 .hero-section {

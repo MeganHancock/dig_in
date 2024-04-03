@@ -6,12 +6,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="input-group mb-3 mt-3">
+    <!-- <div class="input-group mb-3 mt-3">
       <input type="text" class="form-control" placeholder="Search Recipes" aria-label="Search Recipes"
         aria-describedby="button-addon2">
       <button class="btn btn-outline-secondary btn-light" type="button" id="button-addon2"><i
           class="mdi mdi-magnify"></i></button>
-    </div>
+    </div> -->
 
     <!-- LOGIN COMPONENT HERE -->
     <div>

@@ -13,14 +13,14 @@
 
                     <form @submit="createRecipe()">
                         <div class="d-flex justify-content-between">
-                            <div class="mb-3">
+                            <div class="mb-3 w-50 me-2">
                                 <label for="recipeTitle" class="form-label">Title</label>
                                 <input v-model="editableRecipeData.title" type="string" class="form-control"
                                     id="recipeTitle" aria-describedby="recipeTitle" minlength="3" maxLength="50"
                                     required>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3 w-50">
                                 <label for="recipeSubtitle" class="form-label">Subtitle</label>
                                 <input v-model="editableRecipeData.subtitle" type="string" class="form-control"
                                     id="recipeSubtitle" aria-describedby="recipeSubtitle" minlength="3" maxLength="50"
@@ -103,11 +103,18 @@ export default {
 
 <style lang="scss" scoped>
 .modalhdr {
-    background-color: green;
+    background-color: #0cbc87;
+
     ;
 }
 
 .create-title {
-    background-color: green;
+    background-color: #0cbc87;
+    font-family: "Playfair Display", serif;
+    font-style: normal;
+    font-size: 6vh;
+    color: white;
+    text-shadow: 1px 1px black;
+
 }
 </style>

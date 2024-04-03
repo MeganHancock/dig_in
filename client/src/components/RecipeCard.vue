@@ -13,7 +13,7 @@
         <div class="mb-5 shadow">
             <img :src="recipe.img" :alt="recipe.title" class="rounded-3">
             <div class="position-relative">
-                <p class="subtitle title-label label-decoration rounded-3"><b>{{ recipe.title
+                <p class="subtitle title-label label-decoration rounded-3 px-3"><b>{{ recipe.title
                         }}</b><br>
                     <span class="d-none d-md-block">
                         {{ recipe.subtitle }}
@@ -78,7 +78,7 @@ img {
     padding: 2px;
     margin-left: 5px;
     text-shadow: 1px 1px black;
-    font-size: 1.8vh;
+    font-size: 1.6vh;
 }
 
 .subtitle {
