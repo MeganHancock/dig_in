@@ -13,9 +13,10 @@
 
             <h4 class="text-center">{{ activeRecipe.title }}</h4>
 
+
+            <!-- NOTE INSTRUCTIONS EDITING AND DISPLAY AREA -->
             <div class="card m-1 p-1">
               <h5>Instructions</h5>
-
               <form @submit.prevent="saveEditedInstructions(activeRecipe.id)" v-if="activeRecipeEditing"
                 class="d-flex align-items-end">
                 <textarea v-model="editableInstructionData.instructions" name="instructions" id="editInstructions"
@@ -28,11 +29,10 @@
               <div class="d-flex justify-content-end">
                 <button @click="setActiveInstructionsEditing(activeRecipe.id)"
                   v-if="activeRecipe.creatorId = account.id && !activeRecipeEditing"
-                  class="btn btn-success ms-3">Edit</button>
+                  class="btn btn-success ms-3 text-light">Edit</button>
               </div>
 
             </div>
-
 
             <!-- NOTE INGREDIENTS CARD AND FORM -->
             <div class="card m-1 p-1">
@@ -66,19 +66,23 @@
 
         <!-- NOTE FOOTER BUTTONS -->
         <div class="modal-footer d-flex justify-content-between">
-          <div v-if="activeRecipe.creatorId = account.id">
+          <div v-if="activeRecipe.creatorId == account.id">
             <button @click="removeRecipe(activeRecipe.id)" class="btn btn-warning" type="button">Delete Recipe</button>
           </div>
+
           <div class="d-flex">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" title="Favorite this recipe"><i
-                class="mdi mdi-heart"></i></button>
+            <button v-if="!isFavorited" @click="createFavorite(activeRecipe.id)" type="button"
+              class="btn btn-success p-1" title="Favorite this recipe"><i
+                class="mdi mdi-heart-outline fs-1 text-light"></i></button>
+
+            <button v-if="isFavorited" @click="removeFavorite(thisFavorite.favoriteId)" type="button"
+              class=" p-1 btn btn-success" title="Favorite this recipe"><i
+                class="mdi mdi-heart text-danger fs-1"></i></button>
           </div>
         </div>
       </div>
-
-
     </div>
+
   </div>
 
 
@@ -86,12 +90,14 @@
 
 
 <script>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { AppState } from '../AppState.js';
-import { ingredientsService } from '../services/IngredientsService.js';
 import Pop from '../utils/Pop.js';
+import { ingredientsService } from '../services/IngredientsService.js';
 import { recipesService } from '../services/RecipesService.js';
+import { favoritesService } from '../services/FavoritesService.js';
 import { Modal } from 'bootstrap';
+import { logger } from '../utils/Logger.js';
 
 
 export default {
@@ -101,10 +107,18 @@ export default {
     const activeRecipe = computed(() => AppState.activeRecipe)
     watch(activeRecipe, () => { editableInstructionData.value = { ...activeRecipe.value } }, { immediate: true })
 
+
+
     return {
+      thisRecipeFavorites: computed(() => AppState.allAccountFavorites.filter(favs => favs.id == activeRecipe.value.id)),
       activeRecipeEditing: computed(() => AppState.activeRecipeEditing),
       activeRecipeIngredients: computed(() => AppState.activeRecipeIngredients),
       account: computed(() => AppState.account),
+      favorites: computed(() => AppState.allAccountFavorites),
+      isFavorited: computed(() => AppState.allAccountFavorites.some(fav => fav.id == AppState.activeRecipe.id)),
+
+      thisFavorite: computed(() => AppState.allAccountFavorites.find(fav => fav.id == AppState.activeRecipe.id && fav.creatorId == AppState.account.id)),
+
       editableIngredientData,
       editableInstructionData,
       activeRecipe,
@@ -133,8 +147,6 @@ export default {
             return
           }
           await ingredientsService.removeIngredient(ingredientId)
-          Pop.success('Ingredient has been removed')
-          Modal.getOrCreateInstance('#recipeModal').hide()
 
         }
         catch (error) {
@@ -164,8 +176,26 @@ export default {
           Pop.error(error);
         }
 
-      }
+      },
 
+      async createFavorite(recipeId) {
+        try {
+          await favoritesService.createFavorite(recipeId)
+        }
+        catch (error) {
+          Pop.error(error);
+        }
+      },
+
+      async removeFavorite(favoriteId) {
+        try {
+          logger.log('favorite id', favoriteId)
+          await favoritesService.removeFavorite(favoriteId)
+        }
+        catch (error) {
+          Pop.error(error);
+        }
+      }
     }
   }
 }

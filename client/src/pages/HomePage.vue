@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid hero-section mb-5 d-flex align-items-center justify-content-center">
+  <div class="container-fluid hero-section  d-flex align-items-center justify-content-center">
     <section class="row">
       <div class="col-12">
         <h1 class="hero-title">dig in!</h1>
@@ -7,17 +7,15 @@
     </section>
   </div>
 
-  <!-- <div class="container">
-    <section class="row position-absolute top-50">
-      <div class="col-6 d-flex justify-content-evenly">
-        <div class="hero-navigation">
-          <a href="">Home</a>
-          <a href="">My Recipes</a>
-          <a href="">Favorites</a>
-        </div>
+  <div class="container my-5">
+    <section class="row justify-content-center">
+      <div class="col-6 d-flex justify-content-between">
+        <h3 role="button" @click="drawAllRecipes()">Home</h3>
+        <h3 role="button" @click="drawFavoriteRecipes()">Favorites</h3>
+        <h3 role="button" @click="drawUsersRecipes()">My Recipes</h3>
       </div>
     </section>
-  </div> -->
+  </div>
 
 
   <div class="container">
@@ -46,6 +44,7 @@ import { recipesService } from "../services/RecipesService.js"
 import { AppState } from '../AppState.js';
 import { logger } from '../utils/Logger.js';
 import CreateRecipeModal from '../components/CreateRecipeModal.vue';
+import App from '../App.vue';
 
 
 
@@ -67,7 +66,19 @@ export default {
     }
 
     return {
-      recipes: computed(() => AppState.recipes)
+      recipes: computed(() => AppState.recipes),
+      accountFavorites: computed(() => AppState.allAccountFavorites),
+
+      drawFavoriteRecipes() {
+        recipesService.drawFavoriteRecipes()
+      },
+      async drawUsersRecipes() {
+        await recipesService.drawUsersRecipes()
+      },
+      async drawAllRecipes() {
+        await recipesService.drawAllRecipes()
+      }
+
 
     }
   },

@@ -5,6 +5,18 @@ import { api } from "./AxiosService.js"
 
 class RecipesService{
 
+async drawAllRecipes() {
+    await this.getRecipes()
+}
+async drawUsersRecipes() {
+    const response = await api.get('api/recipes')
+    const gotRecipes = response.data.map(recipePOJO => new Recipe(recipePOJO))
+    AppState.recipes = gotRecipes.filter(recipe => recipe.creatorId == AppState.account.id)    
+    
+}
+drawFavoriteRecipes() {
+    AppState.recipes = AppState.allAccountFavorites
+}
     async getRecipes() {
         // logger.log('recipes service')
         const response = await api.get('api/recipes')

@@ -19,7 +19,7 @@ public class FavoritesRepository
         favorite.*,
         recipe.*
         FROM favorites favorite
-        JOIN recipes recipe ON recipe.id = favorite.recipeId
+        JOIN recipes recipe ON favorite.recipeId = recipe.id
         WHERE favorite.id = LAST_INSERT_ID();";
 
         FavoriteAndRecipe favoriteAndRecipe = _db.Query<Favorite, FavoriteAndRecipe, FavoriteAndRecipe>(sql, (favorite, recipe) =>
