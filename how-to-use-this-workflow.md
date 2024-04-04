@@ -13,7 +13,6 @@ env:
   REPO_NAME: ${{ secrets.REPO_NAME }}
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  DOCKER_COMPOSE: ${{ secrets.DOCKER_COMPOSE }}
 ```
 
 
