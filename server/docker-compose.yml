@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: your-dockerhub-username/dig_in:latest
+    image: mgnhnck/dig_in:latest
     restart: unless-stopped
     env_file:
       - dig_in-env
