@@ -68,7 +68,7 @@ img {
     aspect-ratio: 1/1;
     max-width: 100%;
     object-fit: cover;
-    height: 30vh;
+    height: 45vh;
 }
 
 .label-decoration {

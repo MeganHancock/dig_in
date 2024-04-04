@@ -18,7 +18,7 @@
   </div>
 
 
-  <div class="container mt-5">
+  <div class="container-fluid mt-5">
     <section v-if="recipes" class="row m-auto">
       <div v-for="recipe in recipes" :key="recipe.id" class="col-md-4 d-flex justify-content-center mb-2">
         <RecipeCard :recipe="recipe" />
@@ -26,7 +26,7 @@
     </section>
   </div>
 
-  <div class="create-button-position m-5">
+  <div v-if="account.id" class="create-button-position m-5">
     <div role="button" class="create-button-style d-flex justify-content-center align-items-center"
       data-bs-toggle="modal" data-bs-target="#createRecipeFormModal">
       <p class="pb-2 text-center mb-2">+</p>

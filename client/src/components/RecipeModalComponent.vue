@@ -15,10 +15,10 @@
 
 
             <!-- NOTE INSTRUCTIONS EDITING AND DISPLAY AREA -->
-            <div class="card m-1 p-1">
+            <div class="card m-1 p-1 w-100 mt-3">
               <h5>Instructions</h5>
-              <form @submit.prevent="saveEditedInstructions(activeRecipe.id)" v-if="activeRecipeEditing"
-                class="d-flex align-items-end">
+              <form @submit.prevent="saveEditedInstructions(activeRecipe.id)"
+                v-if="activeRecipeEditing && activeRecipe.creatorId == account.id" class="d-flex align-items-end">
                 <textarea v-model="editableInstructionData.instructions" name="instructions" id="editInstructions"
                   cols="35" rows="3"></textarea>
                 <button type="submit" class="btn btn-success ms-3 mb-0">+</button>
@@ -26,26 +26,26 @@
               <p v-else>
                 {{ activeRecipe.instructions }}
               </p>
-              <div class="d-flex justify-content-end">
+              <div v-if="activeRecipe.creatorId == account.id" class="d-flex justify-content-end">
                 <button @click="setActiveInstructionsEditing(activeRecipe.id)"
-                  v-if="activeRecipe.creatorId = account.id && !activeRecipeEditing"
+                  v-if="activeRecipe.creatorId == account.id && !activeRecipeEditing"
                   class="btn btn-success ms-3 text-light">Edit</button>
               </div>
 
             </div>
 
             <!-- NOTE INGREDIENTS CARD AND FORM -->
-            <div class="card m-1 p-1">
+            <div class="card m-1 p-1 w-100 mt-3">
               <h5>Ingredients</h5>
               <ul v-for="ingredient in activeRecipeIngredients" :key="ingredient.id"
                 class="d-flex justify-content-between">
                 <li>
                   {{ ingredient.name }} - {{ ingredient.quantity }}
                 </li>
-                <button @click="removeIngredient(ingredient.id)" type="button" class="border-0 text-danger bg-white"
-                  title="remove ingredient from list">X</button>
+                <button v-if="activeRecipe.creatorId == account.id" @click="removeIngredient(ingredient.id)"
+                  type="button" class="border-0 text-danger bg-white" title="remove ingredient from list">X</button>
               </ul>
-              <div v-if="activeRecipe.creatorId = account.id">
+              <div v-if="activeRecipe.creatorId == account.id">
                 <form @submit="createIngredient(activeRecipe.id)" class="d-flex">
                   <div class="input-group m-1">
                     <input v-model="editableIngredientData.name" type="text" class="form-control w-" placeholder="Name"
@@ -65,7 +65,7 @@
         </div>
 
         <!-- NOTE FOOTER BUTTONS -->
-        <div v-if="account.id" class="modal-footer d-flex justify-content-between">
+        <div v-if="account.id" class="modal-footer d-flex justify-content-between ">
           <div v-if="activeRecipe.creatorId == account.id">
             <button @click="removeRecipe(activeRecipe.id)" class="btn btn-warning" type="button">Delete Recipe</button>
           </div>
